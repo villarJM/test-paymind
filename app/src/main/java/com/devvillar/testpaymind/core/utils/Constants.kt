@@ -1,4 +1,4 @@
-package com.devvillar.testpaymind.core
+package com.devvillar.testpaymind.core.utils
 
 import com.devvillar.testpaymind.BuildConfig
 

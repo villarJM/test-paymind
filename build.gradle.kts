@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.kotlin.compose) apply false
+
+    alias(libs.plugins.hilt) apply false  // Hilt plugin
     // Environment variables plugin
     alias(libs.plugins.dotenv) apply false
 }
