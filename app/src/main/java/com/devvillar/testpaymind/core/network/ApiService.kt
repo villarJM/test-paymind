@@ -1,8 +1,8 @@
 package com.devvillar.testpaymind.core.network
 
-import com.devvillar.testpaymind.feature.auth.data.remote.dto.UserDto
-import com.devvillar.testpaymind.feature.auth.data.remote.dto.UserSessionDto
-import com.devvillar.testpaymind.feature.auth.data.remote.request.LoginRequest
+import com.devvillar.testpaymind.feature.auth.data.datasources.remote.dto.UserDto
+import com.devvillar.testpaymind.feature.auth.data.datasources.remote.dto.UserSessionDto
+import com.devvillar.testpaymind.feature.auth.data.datasources.remote.request.LoginRequest
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST

@@ -1,4 +1,4 @@
-package com.devvillar.testpaymind.feature.auth.data.remote.request
+package com.devvillar.testpaymind.feature.auth.data.datasources.remote.request
 
 data class LoginRequest(
     val username: String,

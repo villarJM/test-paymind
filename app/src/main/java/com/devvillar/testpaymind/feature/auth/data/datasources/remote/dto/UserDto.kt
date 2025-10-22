@@ -1,4 +1,4 @@
-package com.devvillar.testpaymind.feature.auth.data.remote.dto
+package com.devvillar.testpaymind.feature.auth.data.datasources.remote.dto
 
 import com.google.gson.annotations.SerializedName
 
