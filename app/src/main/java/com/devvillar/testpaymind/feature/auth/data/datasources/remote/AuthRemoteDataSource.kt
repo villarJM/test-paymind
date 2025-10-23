@@ -12,8 +12,8 @@ class AuthRemoteDataSource @Inject constructor(
     private val apiService: ApiService,
     private val networkClient: NetworkClient
 ) {
-    suspend fun login(email: String, password: String): Result<ApiResponse<UserSessionDto>> {
-        val request = LoginRequest(email, password)
+    suspend fun login(username: String, password: String): Result<ApiResponse<UserSessionDto>> {
+        val request = LoginRequest(username, password)
         return networkClient.safeApiCall {
             apiService.login(request)
         }

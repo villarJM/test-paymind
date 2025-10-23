@@ -37,7 +37,8 @@ class ValidationUtils @Inject constructor(
 
     fun validateUsername(username: String?): String? = when {
         username.isNullOrBlank() -> getUsernameEmptyError()
-        username.contains(" ") -> getUsernameInvalidError()
+        username != username.trim() -> getUsernameInvalidError()
+        username.any { it.isWhitespace() } -> getUsernameInvalidError()
         else -> null
     }
 

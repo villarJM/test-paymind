@@ -2,6 +2,8 @@ package com.devvillar.testpaymind.core.di
 
 import com.devvillar.testpaymind.BuildConfig
 import com.devvillar.testpaymind.core.network.ApiService
+import com.devvillar.testpaymind.core.network.interceptors.AuthInterceptor
+import com.devvillar.testpaymind.core.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -10,6 +12,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -30,9 +33,16 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+    fun provideOkHttpClient(
+        authInterceptor: AuthInterceptor,
+        loggingInterceptor: HttpLoggingInterceptor
+    ): OkHttpClient {
         return OkHttpClient.Builder()
+            .addInterceptor(authInterceptor)
             .addInterceptor(loggingInterceptor)
+            .connectTimeout(Constants.CONNECT_TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(Constants.READ_TIMEOUT, TimeUnit.SECONDS)
+            .writeTimeout(Constants.WRITE_TIMEOUT, TimeUnit.SECONDS)
             .build()
     }
 

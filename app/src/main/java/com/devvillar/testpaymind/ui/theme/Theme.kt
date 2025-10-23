@@ -13,33 +13,53 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Color(0XFF3441B5),
-    secondary = PurpleGrey80,
-    tertiary = Pink80,
-    surface = Color(0XFFFFFFFF)
+    primary = PrimaryBlueDark,
+    onPrimary = Color.White,
+    primaryContainer = PrimaryBlueDark,
+    onPrimaryContainer = Color.White,
+    
+    secondary = SecondaryOrange,
+    onSecondary = Color.White,
+    
+    error = Color(0xFFCF6679),
+    onError = Color.Black,
+    
+    background = SurfaceDark,
+    onBackground = Color.White,
+    surface = SurfaceDark,
+    onSurface = Color.White,
+    surfaceVariant = Color(0xFF2C2B30),
+    onSurfaceVariant = Color(0xFFCAC4D0),
+    
+    outline = Color(0xFF938F99)
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
+    primary = PrimaryBlue,
     onPrimary = Color.White,
+    primaryContainer = PrimaryBlue,
+    onPrimaryContainer = Color.White,
+    
+    secondary = SecondaryOrange,
     onSecondary = Color.White,
-    onTertiary = Color.White,
+    
+    error = Color(0xFFB3261E),
+    onError = Color.White,
+    
+    background = Color.White,
     onBackground = Color(0xFF1C1B1F),
+    surface = Color.White,
     onSurface = Color(0xFF1C1B1F),
-    */
+    surfaceVariant = SurfaceLight,
+    onSurfaceVariant = Color(0xFF49454F),
+    
+    outline = Color(0xFF79747E)
 )
 
 @Composable
 fun TestPayMindTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
