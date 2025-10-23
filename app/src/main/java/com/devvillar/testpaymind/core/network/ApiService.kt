@@ -10,12 +10,12 @@ import retrofit2.http.Path
 
 interface ApiService {
 
-    @POST("auth/login")
+    @POST("/auth/login")
     suspend fun login(@Body request: LoginRequest): ApiResponse<UserSessionDto>
 
-    @GET("auth/users/{userId}")
+    @GET("/auth/users/{userId}")
     suspend fun getUser(@Path("userId") userId: Int): ApiResponse<UserDto>
 
-    @GET("merchants-management/merchant/{merchantId}/sub-merchant/{subMerchantId}/transactions")
+    @GET("/merchants-management/merchant/{merchantId}/sub-merchant/{subMerchantId}/transactions")
     suspend fun getTransactions(@Path("merchantId") merchantId: Int, @Path("subMerchantId") subMerchantId: Int): ApiResponse<List<Any>>
 }

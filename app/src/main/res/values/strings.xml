@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">TestPayMind</string>
+
+    <!-- Login Screen Strings -->
+    <string name="login_title">Hello,\nWelcome Back!</string>
+    <string name="login_subtitle">Hey, welcome back to your special place</string>
+    <string name="login_username_hint">Username</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_sign_in_button">Sign In</string>
+    <string name="login_empty_username">The username can\'t be empty</string>
+    <string name="login_invalid_username">The username can\'t contain spaces</string>
+    <string name="login_empty_password">The password can\'t be empty</string>
+    <string name="login_invalid_password">The password must have at least %1$d characters, including an uppercase, a lowercase, a number and a special character</string>
+    <string name="login_success">Login successful</string>
+    <!-- Home Screen Strings -->
+    <string name="home_welcome_message">Welcome to TestPayMind, %1$s!</string>
+    <string name="home_go_to_transaction_button">Go To Transaction</string>
 </resources>
