@@ -1,19 +1,25 @@
 package com.devvillar.testpaymind.ui.navegation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.devvillar.testpaymind.core.session.SessionViewModel
+import com.devvillar.testpaymind.feature.auth.presentation.screens.HomeScreen
 import com.devvillar.testpaymind.feature.auth.presentation.screens.LoginScreen
 
 @Composable
-fun TestPayMindNavigation() {
+fun TestPayMindNavigation(sessionViewModel: SessionViewModel = hiltViewModel()) {
 
     val navController = rememberNavController()
+    val isLoggedIn by sessionViewModel.isLoggedIn.collectAsState()
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Login.route
+        startDestination = if (isLoggedIn) Screen.Home.route else Screen.Login.route
     ) {
         composable(Screen.Login.route) {
             LoginScreen(
@@ -23,7 +29,19 @@ fun TestPayMindNavigation() {
             )
         }
         composable(Screen.Home.route) {
-
+            HomeScreen(
+                onNavigateToTransaction = {
+                    navController.navigate(Screen.Transaction.route)
+                },
+                onLogout = {
+                    sessionViewModel.logout()
+                    navController.navigate(Screen.Login.route) {
+                        popUpTo(Screen.Home.route) {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
         }
         composable(Screen.Transaction.route) {
 

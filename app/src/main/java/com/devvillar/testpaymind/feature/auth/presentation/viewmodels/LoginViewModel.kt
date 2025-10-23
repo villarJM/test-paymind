@@ -2,6 +2,7 @@ package com.devvillar.testpaymind.feature.auth.presentation.viewmodels
 
 import androidx.lifecycle.viewModelScope
 import com.devvillar.testpaymind.core.base.BaseViewModel
+import com.devvillar.testpaymind.core.session.SessionViewModel
 import com.devvillar.testpaymind.core.utils.PrefsManager
 import com.devvillar.testpaymind.core.utils.ValidationUtils
 import com.devvillar.testpaymind.feature.auth.domain.models.ValidationResult
@@ -40,6 +41,7 @@ class LoginViewModel @Inject constructor(
             loginUseCase(username, password).fold(
                 onSuccess = { userSession ->
                     prefManager.saveTokens(userSession.accessToken, "")
+                    prefManager.saveUserId(userSession.userId)
                     _loginUIState.value = LoginUIState.Success
                 },
                 onFailure = { error ->

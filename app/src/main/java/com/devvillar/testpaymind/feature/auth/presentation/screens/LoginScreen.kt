@@ -1,18 +1,15 @@
 package com.devvillar.testpaymind.feature.auth.presentation.screens
 
-import android.R.attr.singleLine
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -46,17 +43,18 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.devvillar.testpaymind.core.utils.ValidationUtils
 import com.devvillar.testpaymind.feature.auth.presentation.states.LoginUIState
 import com.devvillar.testpaymind.feature.auth.presentation.viewmodels.LoginViewModel
+import com.devvillar.testpaymind.ui.components.LoadingScreen
 
 
 @Composable
 fun LoginScreen(
     viewModel: LoginViewModel = hiltViewModel(),
-    onNavigateToHome: () -> Unit
+    onNavigateToHome: () -> Unit = { }
 ) {
 
     val loginState by viewModel.loginUIState.collectAsStateWithLifecycle()
     val validationState by viewModel.validationResult.collectAsStateWithLifecycle()
-    val snackbarHostState = remember { SnackbarHostState() }
+    val snackBarHostState = remember { SnackbarHostState() }
 
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -67,17 +65,22 @@ fun LoginScreen(
         when (loginState) {
             is LoginUIState.Success -> onNavigateToHome()
             is LoginUIState.Error -> {
-                snackbarHostState.showSnackbar((loginState as LoginUIState.Error).message)
+                snackBarHostState.showSnackbar((loginState as LoginUIState.Error).message)
             }
             else -> {}
         }
+    }
+
+    if (loginState is LoginUIState.Loading) {
+        LoadingScreen()
+        return
     }
 
 
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
-        snackbarHost = { SnackbarHost(snackbarHostState) }
+        snackbarHost = { SnackbarHost(snackBarHostState) }
     ) { innerPadding ->
 
         Box(
@@ -106,7 +109,7 @@ fun LoginScreen(
 
                             ),
                             start = Offset(0f, 0f),
-                            end = Offset(400f, 0f)
+                            end = Offset(textWidth, 0f)
                         )
                     ),
                     onTextLayout = { result ->
