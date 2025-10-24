@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.FilterList
@@ -43,10 +41,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.devvillar.testpaymind.R
-import com.devvillar.testpaymind.feature.transaction.domain.models.Content
 import com.devvillar.testpaymind.feature.transaction.presentation.components.ModalBottomSheetFilter
-import com.devvillar.testpaymind.feature.transaction.presentation.components.PaginationBar
-import com.devvillar.testpaymind.feature.transaction.presentation.components.TransactionCard
+import com.devvillar.testpaymind.feature.transaction.presentation.components.TransactionList
 import com.devvillar.testpaymind.feature.transaction.presentation.states.TransactionUIState
 import com.devvillar.testpaymind.feature.transaction.presentation.viewmodels.TransactionViewModel
 import com.devvillar.testpaymind.core.ui.components.LoadingScreen
@@ -65,6 +61,7 @@ fun TransactionScreen(
     val snackBarHostState = remember { SnackbarHostState() }
     var showBottomSheet by remember { mutableStateOf(false) }
     var textWidth by remember { mutableFloatStateOf(0f) }
+    var isRefreshing by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         viewModel.getTransactions()
@@ -73,6 +70,9 @@ fun TransactionScreen(
     LaunchedEffect(transactionState) {
         if (transactionState is TransactionUIState.Error) {
             snackBarHostState.showSnackbar((transactionState as TransactionUIState.Error).message)
+        }
+        if (transactionState is TransactionUIState.Success) {
+            isRefreshing = false
         }
     }
 
@@ -111,10 +111,15 @@ fun TransactionScreen(
 
                 when (val state = transactionState) {
                     is TransactionUIState.Success -> {
-                        TransactionListContent(
+                        TransactionList(
                             transactions = state.data.content,
                             totalPages = state.data.totalPages.toInt(),
                             currentPage = currentPage,
+                            isRefreshing = isRefreshing,
+                            onRefresh = {
+                                isRefreshing = true
+                                viewModel.getTransactions()
+                            },
                             onPreviousPage = {
                                 viewModel.updatePage(currentPage - 1)
                                 viewModel.getTransactions()
@@ -189,51 +194,6 @@ private fun HeaderSection(
     }
 }
 
-@Composable
-private fun TransactionListContent(
-    transactions: List<Content>,
-    totalPages: Int,
-    currentPage: Int,
-    onPreviousPage: () -> Unit,
-    onNextPage: () -> Unit
-) {
-    if (transactions.isEmpty()) {
-        EmptyState()
-    } else {
-        Box(modifier = Modifier.fillMaxSize()) {
-            LazyColumn(
-                modifier = Modifier.padding(bottom = 72.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                items(transactions) { transaction ->
-                    TransactionCard(transaction = transaction)
-                }
-            }
-
-            PaginationBar(
-                currentPage = currentPage,
-                totalPages = totalPages,
-                onPreviousPage = onPreviousPage,
-                onNextPage = onNextPage,
-                modifier = Modifier.align(Alignment.BottomCenter)
-            )
-        }
-    }
-}
-
-@Composable
-private fun EmptyState() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = "No transactions found",
-            fontSize = 16.sp,
-            color = Color.Gray
-        )
-    }
-}
 
 @Preview(showBackground = true)
 @Composable
