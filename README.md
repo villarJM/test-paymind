@@ -23,7 +23,7 @@ La aplicación tiene 3 pantallas principales:
 1. Clonar el repo:
 
 ```bash
-git clone https://github.com/tu-usuario/TestPayMind.git
+git clone https://github.com/villarJM/test-paymind.git
 cd TestPayMind
 ```
 
