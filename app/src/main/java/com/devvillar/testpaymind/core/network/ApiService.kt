@@ -22,6 +22,6 @@ interface ApiService {
     suspend fun getTransactionByMerchantAndSubMerchant(
         @Path("merchantId") merchantId: Int,
         @Path("subMerchantId") subMerchantId: Int,
-        @QueryMap params: Map<String, String>
+        @QueryMap(encoded = true) params: Map<String, String>
     ): ApiResponse<TransactionDataDto>
 }

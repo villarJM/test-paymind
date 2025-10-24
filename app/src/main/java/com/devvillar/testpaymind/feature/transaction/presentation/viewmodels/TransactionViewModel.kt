@@ -10,6 +10,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,10 +36,17 @@ class TransactionViewModel @Inject constructor(
     private val _sort = MutableStateFlow("date,desc")
     val sort = _sort.asStateFlow()
 
-    private val _startDate = MutableStateFlow("")
+    // Inicializar con el primer día del mes actual
+    private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+    private val startOfMonth = Calendar.getInstance().apply {
+        set(Calendar.DAY_OF_MONTH, 1)
+    }
+    private val today = Calendar.getInstance()
+
+    private val _startDate = MutableStateFlow(dateFormat.format(startOfMonth.time))
     val startDate = _startDate.asStateFlow()
 
-    private val _endDate = MutableStateFlow("")
+    private val _endDate = MutableStateFlow(dateFormat.format(today.time))
     val endDate = _endDate.asStateFlow()
 
     fun updatePage(pageNum: Int) { _page.value = pageNum }

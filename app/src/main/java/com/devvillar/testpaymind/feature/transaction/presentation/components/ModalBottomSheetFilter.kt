@@ -32,6 +32,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -40,8 +41,13 @@ import com.devvillar.testpaymind.feature.transaction.presentation.viewmodels.Tra
 import kotlinx.coroutines.launch
 import com.devvillar.testpaymind.R
 import java.text.SimpleDateFormat
-import java.util.Date
+import java.util.Calendar
 import java.util.Locale
+import java.util.TimeZone
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,10 +60,25 @@ fun ModalBottomSheetFilter(
 
     val sheetState = rememberModalBottomSheetState()
 
+    val startOfMonth = Calendar.getInstance().apply {
+        set(Calendar.DAY_OF_MONTH, 1)
+        set(Calendar.HOUR_OF_DAY, 0)
+        set(Calendar.MINUTE, 0)
+        set(Calendar.SECOND, 0)
+        set(Calendar.MILLISECOND, 0)
+    }
+
+    val endOfPeriod = Calendar.getInstance().apply {
+        set(Calendar.HOUR_OF_DAY, 23)
+        set(Calendar.MINUTE, 59)
+        set(Calendar.SECOND, 59)
+        set(Calendar.MILLISECOND, 999)
+    }
+
     var tempSortField by remember { mutableStateOf("date") }
     var tempSortDirection by remember { mutableStateOf("DESC") }
-    var tempStartDateMillis by remember { mutableStateOf<Long?>(null) }
-    var tempEndDateMillis by remember { mutableStateOf<Long?>(null) }
+    var tempStartDateMillis by remember { mutableStateOf<Long?>(startOfMonth.timeInMillis) }
+    var tempEndDateMillis by remember { mutableStateOf<Long?>(endOfPeriod.timeInMillis) }
     var expandedSortField by remember { mutableStateOf(false) }
     var expandedSortDirection by remember { mutableStateOf(false) }
 
@@ -82,7 +103,7 @@ fun ModalBottomSheetFilter(
             )
 
             Box {
-                OutlinedTextField(
+                TextField(
                     value = when (tempSortField) {
                         "date" -> stringResource(R.string.transaction_filter_by_date)
                         "amount" -> stringResource( R.string.transaction_filter_by_amount )
@@ -105,7 +126,13 @@ fun ModalBottomSheetFilter(
                                 contentDescription = "Expand"
                             )
                         }
-                    }
+                    },
+                    shape = RoundedCornerShape(8.dp),
+                    colors = TextFieldDefaults.colors(
+                        unfocusedIndicatorColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedContainerColor = Color(0XFFE1E3F5)
+                    )
                 )
                 DropdownMenu(
                     expanded = expandedSortField,
@@ -129,7 +156,7 @@ fun ModalBottomSheetFilter(
             Spacer(Modifier.height(12.dp))
 
             Box {
-                OutlinedTextField(
+                TextField(
                     value = when (tempSortDirection) {
                         "ASC" -> stringResource( R.string.transaction_filter_by_asc )
                         "DESC" -> stringResource( R.string.transaction_filter_by_desc )
@@ -152,7 +179,13 @@ fun ModalBottomSheetFilter(
                                 contentDescription = "Expand"
                             )
                         }
-                    }
+                    },
+                    shape = RoundedCornerShape(8.dp),
+                    colors = TextFieldDefaults.colors(
+                        unfocusedIndicatorColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedContainerColor = Color(0XFFE1E3F5)
+                    )
                 )
                 DropdownMenu(
                     expanded = expandedSortDirection,
@@ -175,9 +208,9 @@ fun ModalBottomSheetFilter(
 
             Spacer(Modifier.height(12.dp))
 
-            OutlinedTextField(
+            TextField(
                 value = tempStartDateMillis?.let {
-                    SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date(it))
+                    SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(java.util.Date(it))
                 } ?: "",
                 onValueChange = { },
                 label = { Text( stringResource(R.string.transaction_label_start_date) ) },
@@ -192,14 +225,20 @@ fun ModalBottomSheetFilter(
                             contentDescription = "Select date"
                         )
                     }
-                }
+                },
+                shape = RoundedCornerShape(8.dp),
+                colors = TextFieldDefaults.colors(
+                    unfocusedIndicatorColor = Color.Transparent,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedContainerColor = Color(0XFFE1E3F5)
+                )
             )
 
             Spacer(Modifier.height(12.dp))
 
-            OutlinedTextField(
+            TextField(
                 value = tempEndDateMillis?.let {
-                    SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date(it))
+                    SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(java.util.Date(it))
                 } ?: "",
                 onValueChange = { },
                 label = { Text(stringResource(R.string.transaction_label_end_date)) },
@@ -214,7 +253,13 @@ fun ModalBottomSheetFilter(
                             contentDescription = "Select date"
                         )
                     }
-                }
+                },
+                shape = RoundedCornerShape(8.dp),
+                colors = TextFieldDefaults.colors(
+                    unfocusedIndicatorColor = Color.Transparent,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedContainerColor = Color(0XFFE1E3F5)
+                )
             )
 
             Spacer(Modifier.height(24.dp))
@@ -225,8 +270,8 @@ fun ModalBottomSheetFilter(
                         val sortValue = "$tempSortField,$tempSortDirection"
 
                         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                        val startDateStr = tempStartDateMillis?.let { dateFormat.format(Date(it)) } ?: ""
-                        val endDateStr = tempEndDateMillis?.let { dateFormat.format(Date(it)) } ?: ""
+                        val startDateStr = tempStartDateMillis?.let { dateFormat.format(java.util.Date(it)) } ?: ""
+                        val endDateStr = tempEndDateMillis?.let { dateFormat.format(java.util.Date(it)) } ?: ""
 
                         viewModel.updateSort(sortValue)
                         viewModel.updateStartDate(startDateStr)
@@ -238,7 +283,12 @@ fun ModalBottomSheetFilter(
                         onDismissRequest()
                     }
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0XFF3441B5)
+                )
             ) {
                 Text(stringResource(R.string.transaction_apply_filters_button), fontSize = 16.sp)
             }
@@ -248,13 +298,17 @@ fun ModalBottomSheetFilter(
     }
 
     if (showStartDatePicker) {
-        val datePickerState = rememberDatePickerState()
+        val initialUtc = tempStartDateMillis?.let { localMidnightToUtcMillis(it) }
+        val datePickerState = rememberDatePickerState(initialSelectedDateMillis = initialUtc)
         DatePickerDialog(
             onDismissRequest = { showStartDatePicker = false },
             confirmButton = {
                 TextButton(
                     onClick = {
-                        tempStartDateMillis = datePickerState.selectedDateMillis
+                        val utc = datePickerState.selectedDateMillis
+                        if (utc != null) {
+                            tempStartDateMillis = utcMillisToLocalMidnight(utc)
+                        }
                         showStartDatePicker = false
                     }
                 ) {
@@ -272,13 +326,17 @@ fun ModalBottomSheetFilter(
     }
 
     if (showEndDatePicker) {
-        val datePickerState = rememberDatePickerState()
+        val initialUtc = tempEndDateMillis?.let { localMidnightToUtcMillis(it) }
+        val datePickerState = rememberDatePickerState(initialSelectedDateMillis = initialUtc)
         DatePickerDialog(
             onDismissRequest = { showEndDatePicker = false },
             confirmButton = {
                 TextButton(
                     onClick = {
-                        tempEndDateMillis = datePickerState.selectedDateMillis
+                        val utc = datePickerState.selectedDateMillis
+                        if (utc != null) {
+                            tempEndDateMillis = utcMillisToLocalMidnight(utc)
+                        }
                         showEndDatePicker = false
                     }
                 ) {
@@ -294,4 +352,38 @@ fun ModalBottomSheetFilter(
             DatePicker(state = datePickerState)
         }
     }
+}
+
+private fun utcMillisToLocalMidnight(utcMillis: Long): Long {
+    val utcCal = Calendar.getInstance(TimeZone.getTimeZone("UTC")).apply { timeInMillis = utcMillis }
+    val y = utcCal.get(Calendar.YEAR)
+    val m = utcCal.get(Calendar.MONTH)
+    val d = utcCal.get(Calendar.DAY_OF_MONTH)
+    val localCal = Calendar.getInstance().apply {
+        set(Calendar.YEAR, y)
+        set(Calendar.MONTH, m)
+        set(Calendar.DAY_OF_MONTH, d)
+        set(Calendar.HOUR_OF_DAY, 0)
+        set(Calendar.MINUTE, 0)
+        set(Calendar.SECOND, 0)
+        set(Calendar.MILLISECOND, 0)
+    }
+    return localCal.timeInMillis
+}
+
+private fun localMidnightToUtcMillis(localMillis: Long): Long {
+    val localCal = Calendar.getInstance().apply { timeInMillis = localMillis }
+    val y = localCal.get(Calendar.YEAR)
+    val m = localCal.get(Calendar.MONTH)
+    val d = localCal.get(Calendar.DAY_OF_MONTH)
+    val utcCal = Calendar.getInstance(TimeZone.getTimeZone("UTC")).apply {
+        set(Calendar.YEAR, y)
+        set(Calendar.MONTH, m)
+        set(Calendar.DAY_OF_MONTH, d)
+        set(Calendar.HOUR_OF_DAY, 0)
+        set(Calendar.MINUTE, 0)
+        set(Calendar.SECOND, 0)
+        set(Calendar.MILLISECOND, 0)
+    }
+    return utcCal.timeInMillis
 }
