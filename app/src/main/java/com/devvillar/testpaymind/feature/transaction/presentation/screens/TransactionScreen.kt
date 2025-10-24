@@ -83,6 +83,7 @@ fun TransactionScreen(
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
+        containerColor = Color(0XFFF6F7FF),
         snackbarHost = { SnackbarHost(snackBarHostState) }
     ) { innerPadding ->
         Box(

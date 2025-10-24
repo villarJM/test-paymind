@@ -141,7 +141,7 @@ fun HomeScreen(
                     )
 
                 ) {
-                    Text("Go To Transactions")
+                    Text(stringResource(R.string.home_go_to_transaction_button))
                 }
             }
         }

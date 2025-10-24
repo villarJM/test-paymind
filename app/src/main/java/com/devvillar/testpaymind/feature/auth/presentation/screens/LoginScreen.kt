@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -40,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.devvillar.testpaymind.R
 import com.devvillar.testpaymind.core.utils.ValidationUtils
 import com.devvillar.testpaymind.feature.auth.presentation.states.LoginUIState
 import com.devvillar.testpaymind.feature.auth.presentation.viewmodels.LoginViewModel
@@ -98,7 +100,7 @@ fun LoginScreen(
 
             ) {
                 Text(
-                    "Hello, \nWelcome Back",
+                    stringResource(R.string.login_title),
                     fontSize = 32.sp,
                     fontWeight = FontWeight.Bold,
                     style = TextStyle(
@@ -118,7 +120,7 @@ fun LoginScreen(
                 )
 
                 Spacer(Modifier.height(20.dp))
-                Text("Hey, welcome back to your special place")
+                Text(stringResource(R.string.login_subtitle))
                 Spacer(Modifier.height(30.dp))
                 TextField(
                     value = username,
@@ -126,7 +128,7 @@ fun LoginScreen(
                         username = it
                         viewModel.clearValidationErrors()
                     },
-                    label = { Text("Username") },
+                    label = { Text(stringResource(R.string.login_username_hint)) },
                     isError = validationState.getError(ValidationUtils.FIELD_USERNAME) != null,
                     supportingText = {
                         validationState.getError(ValidationUtils.FIELD_USERNAME)?.let {
@@ -153,7 +155,7 @@ fun LoginScreen(
                         password = it
                         viewModel.clearValidationErrors()
                     },
-                    label = { Text("Password") },
+                    label = { Text(stringResource(R.string.login_password_hint)) },
                     isError = validationState.getError(ValidationUtils.FIELD_PASSWORD) != null,
                     supportingText = {
                         validationState.getError(ValidationUtils.FIELD_PASSWORD)?.let {
@@ -185,7 +187,7 @@ fun LoginScreen(
                     )
 
                 ) {
-                    Text("Sign In")
+                    Text(stringResource(R.string.login_sign_in_button))
                 }
             }
         }
