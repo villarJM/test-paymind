@@ -42,7 +42,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.devvillar.testpaymind.R
 import com.devvillar.testpaymind.core.states.UIState
 import com.devvillar.testpaymind.feature.auth.presentation.viewmodels.HomeViewModel
-import com.devvillar.testpaymind.ui.components.LoadingScreen
+import com.devvillar.testpaymind.core.ui.components.LoadingScreen
 
 @Composable
 fun HomeScreen(

@@ -1,6 +1,6 @@
 package com.devvillar.testpaymind.feature.auth.domain.models
 
-class User(
+data class User(
     val createdAt: Long,
     val createdBy: Int,
     val updatedAt: Long,
@@ -19,7 +19,7 @@ class User(
     val userCredentials: UserCredential,
 )
 
-class UserCredential(
+data class UserCredential(
     val userId: Int,
     val subMerchantId: Int,
     val merchantId: Int,

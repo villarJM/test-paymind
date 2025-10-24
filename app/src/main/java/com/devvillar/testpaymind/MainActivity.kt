@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.devvillar.testpaymind.ui.navegation.TestPayMindNavigation
-import com.devvillar.testpaymind.ui.theme.TestPayMindTheme
+import com.devvillar.testpaymind.core.ui.navegation.TestPayMindNavigation
+import com.devvillar.testpaymind.core.ui.theme.TestPayMindTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

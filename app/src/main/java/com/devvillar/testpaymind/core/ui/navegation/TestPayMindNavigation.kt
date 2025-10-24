@@ -1,4 +1,4 @@
-package com.devvillar.testpaymind.ui.navegation
+package com.devvillar.testpaymind.core.ui.navegation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -10,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import com.devvillar.testpaymind.core.session.SessionViewModel
 import com.devvillar.testpaymind.feature.auth.presentation.screens.HomeScreen
 import com.devvillar.testpaymind.feature.auth.presentation.screens.LoginScreen
+import com.devvillar.testpaymind.feature.transaction.presentation.screens.TransactionScreen
 
 @Composable
 fun TestPayMindNavigation(sessionViewModel: SessionViewModel = hiltViewModel()) {
@@ -44,6 +45,15 @@ fun TestPayMindNavigation(sessionViewModel: SessionViewModel = hiltViewModel()) 
             )
         }
         composable(Screen.Transaction.route) {
+            TransactionScreen(
+                onNavigateBack = {
+                    navController.navigate(Screen.Home.route) {
+                        popUpTo(Screen.Transaction.route) {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
 
         }
     }

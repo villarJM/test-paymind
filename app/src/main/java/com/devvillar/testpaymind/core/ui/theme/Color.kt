@@ -1,4 +1,4 @@
-package com.devvillar.testpaymind.ui.theme
+package com.devvillar.testpaymind.core.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

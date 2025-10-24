@@ -1,7 +1,7 @@
 package com.devvillar.testpaymind.feature.auth.data.repositories
 
 import com.devvillar.testpaymind.feature.auth.data.datasources.remote.AuthRemoteDataSource
-import com.devvillar.testpaymind.feature.auth.data.mappers.AuthMapper
+import com.devvillar.testpaymind.feature.auth.data.datasources.remote.mappers.toDomain
 import com.devvillar.testpaymind.feature.auth.domain.models.User
 import com.devvillar.testpaymind.feature.auth.domain.models.UserSession
 import com.devvillar.testpaymind.feature.auth.domain.repositories.AuthRepository
@@ -9,7 +9,6 @@ import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val remoteDataSource: AuthRemoteDataSource,
-    private val mapper: AuthMapper
 ): AuthRepository {
 
     override suspend fun login(username: String, password: String): Result<UserSession> {
@@ -21,7 +20,7 @@ class AuthRepositoryImpl @Inject constructor(
                     if (userSessionDto == null) {
                         return Result.failure(Exception("No user session data"))
                     }
-                    val userSession = mapper.toDomain(userSessionDto)
+                    val userSession = userSessionDto.toDomain()
                     Result.success(userSession)
                 },
                 onFailure = { error ->
@@ -42,7 +41,7 @@ class AuthRepositoryImpl @Inject constructor(
                     if (userDto == null) {
                         return Result.failure(Exception("No user data"))
                     }
-                    val user = mapper.toDomainUser(userDto)
+                    val user = userDto.toDomain()
                     Result.success(user)
                 },
                 onFailure = { error ->

@@ -13,6 +13,8 @@ class PrefsManager @Inject constructor(
         private const val ACCESS_TOKEN_KEY = "access_token"
         private const val REFRESH_TOKEN_KEY = "refresh_token"
         private const val USER_ID_KEY = "user_id"
+        private const val MERCHANT_ID_KEY = "merchant_id"
+        private const val SUB_MERCHANT_ID_KEY = "sub_merchant_id"
     }
 
     private val prefs: SharedPreferences by lazy {
@@ -46,11 +48,35 @@ class PrefsManager @Inject constructor(
         }
     }
 
+    fun getMerchantId(): Int {
+        return prefs.getInt(MERCHANT_ID_KEY, 0)
+    }
+
+    fun saveMerchantId(merchantId: Int) {
+        prefs.edit().apply {
+            putInt(MERCHANT_ID_KEY, merchantId)
+            apply()
+        }
+    }
+
+    fun getSubMerchantId(): Int {
+        return prefs.getInt(SUB_MERCHANT_ID_KEY, 0)
+    }
+
+    fun saveSubMerchantId(subMerchantId: Int) {
+        prefs.edit().apply {
+            putInt(SUB_MERCHANT_ID_KEY, subMerchantId)
+            apply()
+        }
+    }
+
     fun clearTokens() {
         prefs.edit().apply {
             remove(ACCESS_TOKEN_KEY)
             remove(REFRESH_TOKEN_KEY)
             remove(USER_ID_KEY)
+            remove(MERCHANT_ID_KEY)
+            remove(SUB_MERCHANT_ID_KEY)
             apply()
         }
     }

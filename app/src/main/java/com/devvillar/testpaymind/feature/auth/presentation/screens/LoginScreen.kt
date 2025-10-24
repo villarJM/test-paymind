@@ -43,7 +43,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.devvillar.testpaymind.core.utils.ValidationUtils
 import com.devvillar.testpaymind.feature.auth.presentation.states.LoginUIState
 import com.devvillar.testpaymind.feature.auth.presentation.viewmodels.LoginViewModel
-import com.devvillar.testpaymind.ui.components.LoadingScreen
+import com.devvillar.testpaymind.core.ui.components.LoadingScreen
 
 
 @Composable

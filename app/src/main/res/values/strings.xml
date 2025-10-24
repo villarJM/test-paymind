@@ -15,4 +15,17 @@
     <!-- Home Screen Strings -->
     <string name="home_welcome_message">Welcome to TestPayMind, %1$s!</string>
     <string name="home_go_to_transaction_button">Go To Transaction</string>
+    <!-- Transaction Screen Strings -->
+    <string name="transaction_title">My Transaction</string>
+    <string name="transaction_subtitle">Manage your transactions easily</string>
+    <string name="transaction_bottom_sheet_title">Filter Transactions</string>
+    <string name="transaction_filter_by_date">Date</string>
+    <string name="transaction_filter_by_amount">Amount</string>
+    <string name="transaction_filter_by_desc">Descending</string>
+    <string name="transaction_filter_by_asc">Ascending</string>
+    <string name="transaction_label_start_date">Start Date</string>
+    <string name="transaction_label_end_date">End Date</string>
+    <string name="transaction_label_order_by">Order by</string>
+    <string name="transaction_label_direction">Direction</string>
+    <string name="transaction_apply_filters_button">Apply Filters</string>
 </resources>
